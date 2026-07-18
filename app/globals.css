@@ -47,3 +47,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
+/* Fix Leaflet z-index to allow overlays */
+.leaflet-pane { z-index: 1 !important; }
+.leaflet-control { z-index: 2 !important; }
+.leaflet-top, .leaflet-bottom { z-index: 2 !important; }
+
+/* Ensure our overlay is above everything */
+.map-overlay {
+  position: relative;
+  z-index: 10;
+}

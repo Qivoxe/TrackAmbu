@@ -63,10 +63,24 @@ export default function PatientPage() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-dark-bg">
+      {/* Alert Banner */}
       <NotificationBanner message="🚑 Ambulance Dispatched!" subMessage="Clear the lane - Emergency vehicle approaching" isVisible={showAlert} onDismiss={() => setShowAlert(false)} />
-      <MapComponent center={userLocation} userLocation={userLocation} ambulances={ambulances} route={route} height="100vh" />
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 p-4 pointer-events-auto">
+
+      {/* Map - behind everything */}
+      <div className="absolute inset-0 z-0">
+        <MapComponent
+          center={userLocation}
+          userLocation={userLocation}
+          ambulances={ambulances}
+          route={route}
+          height="100vh"
+        />
+      </div>
+
+      {/* UI Overlay - above map */}
+      <div className="absolute inset-0 z-10 pointer-events-none flex flex-col">
+        {/* Top Bar */}
+        <div className="p-4 pointer-events-auto">
           <div className="glass-card p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-emergency-red rounded-xl flex items-center justify-center">
@@ -78,18 +92,32 @@ export default function PatientPage() {
               </div>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 text-green-400 rounded-full text-sm">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" /> Live
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              Live
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 p-4 pointer-events-auto">
+
+        {/* Spacer to push bottom panel down */}
+        <div className="flex-1" />
+
+        {/* Bottom Panel */}
+        <div className="p-4 pointer-events-auto">
           <AnimatePresence mode="wait">
             {!booking ? (
-              <motion.div key="booking-form" initial={{ y: 100 }} animate={{ y: 0 }} exit={{ y: 100 }} className="glass-card p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+              <motion.div
+                key="booking-form"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="glass-card p-5 space-y-4 max-h-[55vh] overflow-y-auto"
+              >
                 <div>
                   <h2 className="text-xl font-bold mb-1">Emergency?</h2>
                   <p className="text-sm text-gray-400">Select emergency type to book nearest ambulance</p>
                 </div>
+
                 <div className="flex items-center gap-2 p-3 bg-dark-bg rounded-xl border border-dark-border">
                   <MapPin className="w-5 h-5 text-emergency-red shrink-0" />
                   <div className="text-sm truncate">
@@ -97,10 +125,23 @@ export default function PatientPage() {
                     <span className="font-medium">{userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}</span>
                   </div>
                 </div>
+
                 <EmergencySelector selected={selectedEmergency} onSelect={setSelectedEmergency} />
-                <button onClick={handleBookAmbulance} disabled={!selectedEmergency} className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all ${selectedEmergency ? "bg-emergency-red hover:bg-emergency-red/80 shadow-lg shadow-emergency-red/20" : "bg-dark-border text-gray-500 cursor-not-allowed"}`}>
-                  <Navigation className="w-5 h-5" /> Book Ambulance Now <ChevronRight className="w-5 h-5" />
+
+                <button
+                  onClick={handleBookAmbulance}
+                  disabled={!selectedEmergency}
+                  className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all ${
+                    selectedEmergency
+                      ? "bg-emergency-red hover:bg-emergency-red/80 shadow-lg shadow-emergency-red/20 active:scale-[0.98]"
+                      : "bg-dark-border text-gray-500 cursor-not-allowed"
+                  }`}
+                >
+                  <Navigation className="w-5 h-5" />
+                  Book Ambulance Now
+                  <ChevronRight className="w-5 h-5" />
                 </button>
+
                 <div className="flex justify-center gap-6 text-xs text-gray-500">
                   <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Avg response: 4 min</span>
                   <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {AMBULANCES.length} ambulances nearby</span>
