@@ -75,3 +75,68 @@ npm run dev
 
 # Open http://localhost:3000
 ```
+
+## Project Structure
+
+ambulance-tracker/
+├── app/
+│ ├── page.tsx # Patient booking screen
+│ ├── driver/
+│ │ └── page.tsx # Driver navigation
+│ ├── citizen/
+│ │ └── page.tsx # Citizen alert view
+│ ├── layout.tsx # Root layout
+│ └── globals.css # Global styles + Tailwind
+├── components/
+│ ├── MapComponent.tsx # Leaflet map with markers
+│ ├── EmergencySelector.tsx # Emergency type grid
+│ ├── BookingCard.tsx # Live booking status
+│ ├── DriverPanel.tsx # Driver dashboard
+│ ├── NotificationBanner.tsx # Alert banner with sound
+│ ├── LoadingScreen.tsx # Splash screen
+│ └── StatsCard.tsx # Stats display
+├── lib/
+│ ├── mockData.ts # Hospitals, ambulances, routes
+│ └── utils.ts # Tailwind helpers
+├── types/
+│ └── index.ts # TypeScript interfaces
+├── public/ # Static assets
+├── package.json
+├── tailwind.config.ts
+├── tsconfig.json
+└── README.md
+
+---
+
+Screenshots
+
+(Add screenshots here before submission)
+
+Patient View Driver View Citizen View
+![Patient](screenshots/patient.png) ![Driver](screenshots/driver.png) ![Citizen](screenshots/citizen.png)
+
+---
+
+Future Scope
+
+- 🔗 Real-time backend with WebSocket connections
+- 📡 IoT integration for live ambulance telemetry
+- 🤖 AI route optimization using traffic prediction
+- 📱 Native mobile apps (React Native)
+- 🏛️ Government API integration for official hospital data
+
+---
+
+Team
+
+- [Your Name] — Full Stack Developer
+
+---
+
+License
+
+MIT License — Built with ❤️ for saving lives.
+
+---
+
+> "In an emergency, every second counts. We built the bridge between panic and help."
