@@ -147,7 +147,7 @@ _(Add screenshots before submission — see `/screenshots`)_
 
 ## Team
 
-- **[Your Name]** — Full Stack Developer
+- **Shivam** — Full Stack Developer
 
 ---
 
